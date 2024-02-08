@@ -30,26 +30,34 @@ class _PerguntaAppState extends State<PerguntaApp> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, Object> questionSelected = questions[_questionSelected];
-
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Perguntas',
-          ),
+          title: _makeAppBarTitle(),
           centerTitle: true,
           backgroundColor: Colors.blue.shade200,
         ),
         body: Column(
-          children: [
-            Question(questionSelected['text'].toString()),
-            for (String answer in questionSelected['answers'] as List<String>)
-              AnswerButton(answer, _incrementQuestionSelected)
-          ],
+          children: _makeBodyChildren(),
         ),
       ),
     );
+  }
+
+  Text _makeAppBarTitle() {
+    return const Text(
+      'Perguntas',
+    );
+  }
+
+  List<Widget> _makeBodyChildren() {
+    final Map<String, Object> questionSelected = questions[_questionSelected];
+    final Question questionWidget =
+        Question(questionSelected['text'].toString());
+    final Iterable<AnswerButton> answersButtons =
+        (questionSelected['answers'] as List<String>)
+            .map((answer) => AnswerButton(answer, _incrementQuestionSelected));
+    return [questionWidget, ...answersButtons];
   }
 }
 
