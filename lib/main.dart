@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:simple_asks_flutter/answer_button.dart';
 import 'package:simple_asks_flutter/question.dart';
 
 void main() => runApp(PerguntaApp());
 
 class _PerguntaAppState extends State<PerguntaApp> {
-  int _perguntaSelecionada = 0;
+  int _questionSelected = 0;
+
   final List<String> perguntas = [
     'Qual é a sua cor favorita?',
     'Qual é o seu animal favorito?',
   ];
 
-  void _incrementarPerguntaSelecionada() {
+  void _incrementQuestionSelected() {
     setState(() {
-      if (_perguntaSelecionada + 1 < perguntas.length) _perguntaSelecionada++;
+      if (_questionSelected + 1 < perguntas.length) _questionSelected++;
     });
   }
 
@@ -21,7 +23,7 @@ class _PerguntaAppState extends State<PerguntaApp> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Perguntas',
           ),
           centerTitle: true,
@@ -29,19 +31,10 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: [
-            Question(perguntas[_perguntaSelecionada]),
-            ElevatedButton(
-              onPressed: _incrementarPerguntaSelecionada,
-              child: Text('Resposta 1'),
-            ),
-            ElevatedButton(
-              onPressed: _incrementarPerguntaSelecionada,
-              child: Text('Resposta 2'),
-            ),
-            ElevatedButton(
-              onPressed: _incrementarPerguntaSelecionada,
-              child: Text('Resposta 3'),
-            ),
+            Question(perguntas[_questionSelected]),
+            AnswerButton('Resposta 1', _incrementQuestionSelected),
+            AnswerButton('Resposta 2', _incrementQuestionSelected),
+            AnswerButton('Resposta 3', _incrementQuestionSelected),
           ],
         ),
       ),
