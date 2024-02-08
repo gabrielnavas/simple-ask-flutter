@@ -16,10 +16,13 @@ class AnswerButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: style,
-      child: Text(title),
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: style,
+        child: Text(title),
+      ),
     );
   }
 }

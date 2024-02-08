@@ -7,19 +7,31 @@ void main() => runApp(PerguntaApp());
 class _PerguntaAppState extends State<PerguntaApp> {
   int _questionSelected = 0;
 
-  final List<String> perguntas = [
-    'Qual é a sua cor favorita?',
-    'Qual é o seu animal favorito?',
+  final List<Map<String, Object>> questions = [
+    {
+      'text': 'Qual é a sua cor favorita?',
+      'answers': ['Preto', 'Vermelho', 'Verde', 'Branco'],
+    },
+    {
+      'text': 'Qual é o seu animal favorito?',
+      'answers': ['Coelho', 'Cobra', 'Elefante', 'Leão'],
+    },
+    {
+      'text': 'Qual é o seu instrutor favorito?',
+      'answers': ['Maria', 'João', 'Leo', 'Pedro'],
+    },
   ];
 
   void _incrementQuestionSelected() {
     setState(() {
-      if (_questionSelected + 1 < perguntas.length) _questionSelected++;
+      _questionSelected++;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, Object> questionSelected = questions[_questionSelected];
+
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -31,10 +43,9 @@ class _PerguntaAppState extends State<PerguntaApp> {
         ),
         body: Column(
           children: [
-            Question(perguntas[_questionSelected]),
-            AnswerButton('Resposta 1', _incrementQuestionSelected),
-            AnswerButton('Resposta 2', _incrementQuestionSelected),
-            AnswerButton('Resposta 3', _incrementQuestionSelected),
+            Question(questionSelected['text'].toString()),
+            for (String answer in questionSelected['answers'] as List<String>)
+              AnswerButton(answer, _incrementQuestionSelected)
           ],
         ),
       ),
