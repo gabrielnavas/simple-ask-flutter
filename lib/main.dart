@@ -22,9 +22,15 @@ class _PerguntaAppState extends State<PerguntaApp> {
     },
   ];
 
+  bool get isQuestionSelected {
+    return _questionSelected < questions.length;
+  }
+
   void _incrementQuestionSelected() {
     setState(() {
-      _questionSelected++;
+      if (isQuestionSelected) {
+        _questionSelected++;
+      }
     });
   }
 
@@ -51,6 +57,18 @@ class _PerguntaAppState extends State<PerguntaApp> {
   }
 
   List<Widget> _makeBodyChildren() {
+    if (!isQuestionSelected) {
+      return [
+        const Question('Acabaram as perguntas!'),
+        AnswerButton(
+            'Voltar',
+            () => {
+                  setState(() {
+                    _questionSelected = 0;
+                  })
+                }),
+      ];
+    }
     final Map<String, Object> questionSelected = questions[_questionSelected];
     final Question questionWidget =
         Question(questionSelected['text'].toString());
