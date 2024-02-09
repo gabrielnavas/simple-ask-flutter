@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:simple_asks_flutter/models/answer.dart';
 
 class AnswerButton extends StatelessWidget {
-  final String title;
-  final Function() onPressed;
+  final Answer _answer;
+  final Function(Answer answer) _onPressed;
 
-  AnswerButton(this.title, this.onPressed, {super.key});
+  AnswerButton(this._answer, this._onPressed, {super.key});
 
   final ButtonStyle style = ElevatedButton.styleFrom(
     backgroundColor: Colors.blue,
@@ -19,9 +20,9 @@ class AnswerButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: () => _onPressed(_answer),
         style: style,
-        child: Text(title),
+        child: Text(_answer.text),
       ),
     );
   }
